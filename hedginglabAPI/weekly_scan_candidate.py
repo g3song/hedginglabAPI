@@ -34,19 +34,18 @@ def main():
 
 	# combo name can be one of Call/Put/Straddle/Strangle/IronButterfly/IronCondor/DoubleCalendar/DoubleDiagonal
 
-	symbol_profit = summarize_trade(combo_name, entry_plan, exit_plan, args.year_list, api_key)
+	symbol_profit = summarize_trade(combo_name, "-1", "2", "2018,2019,2020,2021", api_key)
 
 	final_list = []
 	for symbol in symbol_profit.keys():
-		if symbol_profit[symbol]['total_trade'] > 3:
+		# filter results, minimum trade 10
+		#winning_perc = symbol_profit[symbol]['total_winner'] / symbol_profit[symbol]['total_trade']
+		if symbol_profit[symbol]['total_trade'] >= 8 and symbol_profit[symbol]['winning_perc'] >= 40 and symbol_profit[symbol]['profit_percentage'] > 0.0:
 			final_list.append(symbol_profit[symbol])
 
-	if sort_type == "profit_perc":
-		final_list = sorted(final_list, key=lambda i: i['profit_percentage'], reverse=True)
-	else:
-		final_list = sorted(final_list, key=lambda i: i['winning_perc'], reverse=True)
+	final_list = sorted(final_list, key=lambda i: i['profit_percentage'], reverse=True)
 
-	for symbol in final_list[:50]:
+	for symbol in final_list[:100]:
 		print (symbol)
 
 
