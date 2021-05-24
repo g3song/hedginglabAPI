@@ -45,6 +45,8 @@ def main():
 
 	final_list = sorted(final_list, key=lambda i: i['profit_percentage'], reverse=True)
 
+	# now get upcoming earnings
+
 	for symbol in final_list[:100]:
 		print (symbol)
 
